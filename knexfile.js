@@ -14,4 +14,14 @@ module.exports = {
       ...sharedConfig,
       connection: { filename: './data/auth.db3' },
     },
-};
+    production : {
+      client: "pg",
+      connection: process.env.DATABASE_URL,
+      migrations: {
+          directory: "./database/migrations",
+      },
+      seeds: {
+          directory: "./database/seeds",
+      },
+    },
+}
