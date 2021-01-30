@@ -1,9 +1,10 @@
-require("dotenv/config")
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const dotenv = require('dotenv');
 
 const authRouter = require('./auth/auth-router')
+const potluckRouter = require('./potluck/potluck-router')
 
 const server = express();
 
@@ -12,6 +13,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/api/auth', authRouter)
+server.use('/api/potlucks', potluckRouter)
 
 server.get('/', (req, res) => {
     res.json({

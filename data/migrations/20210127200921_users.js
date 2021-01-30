@@ -1,14 +1,28 @@
-exports.up = function(knex) {
-  return knex.schema.createTable('users', users => {
+exports.up = async function(knex) {
+  await knex.schema.createTable('users', users => {
     users.increments();
-    users.string('name', 255).notNullable();
-    users.string('username', 255).notNullable().unique();
-    users.string('password', 255).notNullable();
-    users.string('email', 255).notNullable();
-    users.string('phone', 255).notNullable();
+    users.text('name', 255).notNullable();
+    users.text('username', 255).notNullable().unique();
+    users.text('password', 255).notNullable();
+    users.text('email', 255).notNullable();
+    users.text('phone', 255).notNullable();
+  })
+
+  await knex.schema.createTable('potlucks', potlucks => {
+    potlucks.increments();
+    potlucks.text('potluck_name', 255).notNullable();
+    potlucks.date('date', 255).notNullable();
+    potlucks.text('location', 255).notNullable();
+    potlucks.integer('host_id', 255)
+      .notNullable()
+      .references("id")
+      .inTable("users")
+      .onDelete("CASCADE")
+      .onUpdate("CASCADE")
   })
 };
 
-exports.down = function(knex) {
-  return knex.schema.create('users');
+exports.down = async function(knex) {
+  await knex.schema.create('potlucks');
+  await knex.schema.create('users');
 };
