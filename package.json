@@ -4,10 +4,10 @@
   "description": "Back End Repository",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js",
-    "migrate": "knex migrate:latest",
-    "test": "cross-env NODE_ENV=testing jest api/server.test.js --watchAll --verbose --runInBand"
+    "test": "cross-env NODE_ENV=testing jest --coverage --watch",
+    "server": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "migrate": "knex migrate:latest"
   },
   "repository": {
     "type": "git",
