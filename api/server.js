@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const logger = require('morgan')
 const helmet = require('helmet');
 const dotenv = require('dotenv');
 
@@ -8,6 +9,7 @@ const potluckRouter = require('./potluck/potluck-router')
 
 const server = express();
 
+server.use(logger('dev'))
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
