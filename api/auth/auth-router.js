@@ -1,5 +1,6 @@
 const express = require("express")
 const bcrypt = require("bcryptjs")
+const { v4: uuidv4 } =require("uuid")
 const jwt = require("jsonwebtoken")
 const Users = require("./auth-model")
 const { restrict } = require("../middleware/restricted")
@@ -41,6 +42,7 @@ router.post("/register", async (req, res, next) => {
         }
 
         const newUser = await Users.add({
+            id: uuidv4(), 
             name,
             username,
             password: await bcrypt.hash(password, 14),
@@ -48,10 +50,11 @@ router.post("/register", async (req, res, next) => {
             phone
         })
 
+        console.log(newUser)
         res.status(201).json(newUser)
 
     } catch(err) {
-
+        next(err)
     }
 }) 
 
