@@ -1,6 +1,4 @@
 const express = require("express")
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
 const Potlucks = require("./potluck-model")
 const { v4: uuidv4 } =require("uuid")
 const { validatePotluckById } = require("../middleware/validation")
