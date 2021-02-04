@@ -1,5 +1,4 @@
 const db = require("../../data/dbConfig")
-const router = require("./potluck-router")
 
 async function addPotluck(potluck) {
     const [id] = await db("potlucks").insert(potluck, "id")

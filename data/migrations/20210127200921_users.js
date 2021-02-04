@@ -17,15 +17,52 @@ exports.up = async function(knex) {
     potlucks.text('location', 255).notNullable();
     potlucks.uuid('host_id')
       .notNullable()
-      .references("id")
-      .inTable("users")
-      .onDelete("CASCADE")
-      .onUpdate("CASCADE")
+      .references('id')
+      .inTable('users')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+  })
+
+  .createTable('foods', foods => {
+    foods.uuid('id').notNullable().unique().primary();
+    foods.text('name').notNullable().unique();
+  })
+
+  .createTable('potlucks_users', table => {
+    table.uuid('potluck_id')
+      .notNullable()
+      .references('id')
+      .inTable('potlucks')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+    table.uuid('user_id')
+      .notNullable()
+      .references('id')
+      .inTable('users')
+    table.boolean('isAttending').notNull().defaultTo('false')
+
+    table.primary(['potluck_id', 'user_id'])
+  })
+
+  .createTable('potlucks_foods', table => {
+    table.uuid('potluck_id')
+      .notNullable()
+      .references('id')
+      .inTable('potlucks')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+    table.uuid('food_id')
+      .notNullable()
+      .references('id')
+      .inTable('foods')
+    table.boolean('isTaken').notNullable().defaultTo('false')
+
+    table.primary(['potluck_id', 'food_id'])
   })
 };
 
 exports.down = function(knex) {
   return knex.schema
 
-  .dropTableIfExists('potlucks, users');
+  .dropTableIfExists('potlucks_foods, potlucks_users,foods, potlucks, users');
 };
