@@ -6,21 +6,20 @@ async function addFood(food) {
     return findFoodById(id)
 }
 
-// async function addFoodToPotluck(food, id) {
-//     let Potluckid = await Potlucks.findPotluckById(Potluckid)
-//     let Food = await findFoodByName(food)
-//     if (!Food) {
-//       newFood = await addFood(food)
-//     }
+async function addFoodToPotluck(food, pid, fid) {
+    let newFood = await findFoodByName(food)
+    if (newFood) {
+      newFood = await addFood(food)
+    }
  
-//      await db("potlucks_foods").insert({food_id: Food.id, potluck_id: id, isTaken: false})
+    await db("potlucks_foods").insert({food_id: newFood.id, potluck_id: id, isTaken: false})
  
-//     return db("potlucks_foods as pf")
-//          .innerJoin("foods as f", "f.id", "pf.food_id")
-//          .innerJoin("potlucks as p", "p.id", "pf.potluck_id")
-//          .select("p.potluck_name","f.id as food_id", "f.name as food_name", "pf.isTaken")
-//          .where({ "p.id": id })
-//  }
+    return db("potlucks_foods as pf")
+         .innerJoin("foods as f", "f.id", "pf.food_id")
+         .innerJoin("potlucks as p", "p.id", "pf.potluck_id")
+         .select("p.name as potluck_name","f.id as food_id", "f.name as food_name", "pf.isTaken")
+         .where({ "p.id": id })
+ } 
 
 function findFood() {
     return db('foods').select('id', 'name')
@@ -46,11 +45,11 @@ async function updateTaken(pid, fid, changes) {
     return findPotluckFoodById(pid, fid)
 }
 
-function findPotLuckFoodById(pid, fid) {
+function findPotluckFoodById(pid, fid) {
     return db('potlucks_foods as pf')
         .innerJoin('foods as f', 'f.id', 'pf.food_id')
         .innerJoin('potlucks as p', 'p.id', 'pf.potluck_id')
-        .select('p.id as potluck_id', 'p.potluck_name', 'f.id as food_id', 'f.food_name', 'pf.isTaken')
+        .select('p.id as potluck_id', 'p.potluck_name', 'f.id as food_id', 'f.name', 'pf.isTaken')
         .where({'pf.potluck_id': pid, 'pf.food_id': fid})
 }
 
@@ -68,7 +67,7 @@ module.exports = {
     findFoodByName,
     findFoodById,
     updateTaken,
-    findPotLuckFoodById,
+    findPotluckFoodById,
     findAllPotluckFood,
     addFoodToPotluck,
 }
