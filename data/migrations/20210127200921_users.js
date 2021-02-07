@@ -55,6 +55,8 @@ exports.up = async function(knex) {
       .notNullable()
       .references('id')
       .inTable('foods')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
     table.boolean('isTaken').notNullable().defaultTo('false')
 
     table.primary(['potluck_id', 'food_id'])

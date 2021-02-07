@@ -1,5 +1,6 @@
 const Potlucks = require("../potluck/potluck-model")
 const Users = require("../auth/auth-model")
+const Foods = require("../food/food-model")
 
 function validatePotluckById (req, res, next) {
 
@@ -37,7 +38,7 @@ function validateUserById (req, res, next) {
 
 function validateFoodById (req, res, next) {
 
-    Users.findFoodById(req.params.fid)
+    Foods.findFoodById(req.params.fid)
     .then (food => {
         if(food) {
             req.food = food

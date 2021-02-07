@@ -83,6 +83,7 @@ router.post("/login", async (req, res, next) => {
         }, process.env.JWT_SECRET)
 
         res.json({
+            id: user.id,
             message: `Welcome ${user.username}!`,
             token
         })
