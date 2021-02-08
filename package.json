@@ -4,7 +4,7 @@
   "description": "Back End Repository",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=testing jest --coverage --watch",
+    "test": "cross-env NODE_ENV=testing jest --watch",
     "server": "cross-env NODE_ENV=development nodemon index.js",
     "start": "cross-env NODE_ENV=production node index.js",
     "migrate": "knex migrate:latest"

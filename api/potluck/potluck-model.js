@@ -26,11 +26,6 @@ function findPotluckById(id) {
     .first()
 }
 
-async function addPotluck(potluck) {
-    const [id] = await db("potlucks").insert(potluck, "id")
-    return findPotluckById(id)
-}
-
 async function updatePotluck(id, changes) {
     await db("potlucks")
     .where({id})
@@ -45,30 +40,30 @@ function deletePotluck(id) {
 }
 
 //Guests 
-async function addUserToPotluck(pid, uid) {
+// async function addUserToPotluck(pid, uid) {
     
-    await db("potlucks_users").insert({user_id: uid, potluck_id: pid, isAttending: false})
+//     await db("potlucks_users").insert({user_id: uid, potluck_id: pid, isAttending: false})
 
-    return db("potlucks_users as pu")
-       .innerJoin("users as u", "u.id", "pu.user_id")
-       .innerJoin("potlucks as p", "p.id", "pu.potluck_id")
-       .select("p.potluck_name", "u.name as user_name", "pu.isAttending")
-       .where({"p.id": pid})
-}
+//     return db("potlucks_users as pu")
+//        .innerJoin("users as u", "u.id", "pu.user_id")
+//        .innerJoin("potlucks as p", "p.id", "pu.potluck_id")
+//        .select("p.potluck_name", "u.name as user_name", "pu.isAttending")
+//        .where({"p.id": pid})
+// }
 
-async function updateAttending(pid, uid, changes) {
-    await db("potlucks_users as pu")
-    .where({"potluck_id": pid, "user_id": uid})
-    .update(changes)
-}
+// async function updateAttending(pid, uid, changes) {
+//     await db("potlucks_users as pu")
+//     .where({"potluck_id": pid, "user_id": uid})
+//     .update(changes)
+// }
 
-function findPotluckGuestById(pid, uid) {
-    return db("potlucks_users as pu")
-        .innerJoin("users as u", "u.id", "pu.user_id")
-        .innerJoin("potlucks as p", "p.id", "pu.potluck_id")
-        .select("p.id as potluck_id", "p.potluck_name", "u.id as user_id", "u.name as guest_name", "pu.isAttending")
-        .where({"pu.potluck_id": pid, "pu.user_id": uid})
-}
+// function findPotluckGuestById(pid, uid) {
+//     return db("potlucks_users as pu")
+//         .innerJoin("users as u", "u.id", "pu.user_id")
+//         .innerJoin("potlucks as p", "p.id", "pu.potluck_id")
+//         .select("p.id as potluck_id", "p.potluck_name", "u.id as user_id", "u.name as guest_name", "pu.isAttending")
+//         .where({"pu.potluck_id": pid, "pu.user_id": uid})
+// }
 
 module.exports = { 
     addPotluck,
@@ -77,7 +72,4 @@ module.exports = {
     findPotluckById,
     updatePotluck,
     deletePotluck,
-    addUserToPotluck,
-    updateAttending,
-    findPotluckGuestById,
 }
