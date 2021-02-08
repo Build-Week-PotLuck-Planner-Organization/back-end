@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const logger = require('morgan')
 const helmet = require('helmet');
-const dotenv = require('dotenv');
+require("dotenv").config();
 
 const authRouter = require('./auth/auth-router')
 const potluckRouter = require('./potluck/potluck-router')
